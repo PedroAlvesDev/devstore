@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@theme {
+  --grid-rows-app: min-content max-content;
+}
+
+.grid-rows-app {
+  grid-template-rows: var(--grid-rows-app);
+}
