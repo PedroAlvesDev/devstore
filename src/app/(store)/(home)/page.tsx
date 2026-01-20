@@ -71,7 +71,6 @@ export default async function Home() {
           })}</span>
         </div>
       </Link>
-
       )})}      
     </div>
   )

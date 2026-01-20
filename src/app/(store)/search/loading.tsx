@@ -1,3 +1,3 @@
-export default async function SearchLoading() {
-    return <h1>Carregando busca...</h1>
+export default function HomeLoading() {
+    return <p>Carregando...</p>
 }
