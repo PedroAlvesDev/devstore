@@ -1,38 +1,46 @@
-import { api } from "@/data/api";
-import { Product } from "@/data/types/products";
+import { Product as ProductType } from "@/data/types/products";
+import data from "@/app/api/products/data.json";
 import { Metadata } from "next";
 import Image from "next/image";
 
-interface Product {
-    params: {
+interface ProductPageProps {
+    params: Promise<{
         slug: string
+    }>
+}
+
+async function getProduct(slug: string): Promise<ProductType> {
+    const product = data.products.find((p) => p.slug === slug)
+
+    if (!product) {
+        throw new Error('Product not found')
     }
+
+    return product as ProductType
 }
 
-async function getProduct(slug: string): Promise<Product> {
-    const response = await api(`/products/${slug}`, {
-        next: {
-            revalidate: 60 * 60,
-        },
-    })
-
-    const product = await response.json()
-
-    return product
-}
-
-export async function generateMetadata({ params,
-
- }: ProductProps): Promise<Metadata> {
-    const product = await getProduct(params.slug)
+export async function generateMetadata(
+    { params,
+ }: ProductPageProps
+): Promise<Metadata> {
+    const { slug } = await params
+    const product = await getProduct(slug)
 
     return {
         title: product.title,
     }
 }
 
-export default async function ProductPage({ params }: ProductProps) {
-    const product = await getProduct(params.slug);
+export async function generateStaticParams() {
+    const products: ProductType[] = data.products.filter((p) => p.featured)
+
+    return products.map((product) => ({ slug: product.slug }))
+
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+    const {slug} = await params
+    const product = await getProduct(slug)
 
     return (
         <div className="realtive grid max-h-[860px] grid-cols-3">
