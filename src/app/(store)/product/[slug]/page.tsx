@@ -2,6 +2,7 @@ import { Product as ProductType } from "@/data/types/products";
 import data from "@/app/api/products/data.json";
 import { Metadata } from "next";
 import Image from "next/image";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
 interface ProductPageProps {
     params: Promise<{
@@ -72,7 +73,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                     maximumFractionDigits: 0,
          })}
                 </span>
-                <span className="text-sm text-zinc-400">
+                <span className="text-sm text-zinc-400">Em até 12x s/ juros de{' '}
                     {(product.price / 12).toLocaleString('pt-BR', {
                         style: 'currency',
                         currency: 'BRL',
@@ -99,13 +100,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
             </div>
 
-            <button
-                type="button"
-                className="mt-8 flex h-12 items-center justify-center rounded-full bg-emerald-600 font-semibold text-white"
-            >
-                Adicionar ao carrinho
-            </button>
-
+         <AddToCartButton productId={product.id} />
         </div>
         </div>
     )
