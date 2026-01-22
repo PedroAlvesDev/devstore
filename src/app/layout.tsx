@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     template: '%s | DevStore',
     default: 'DevStore',
   },
+  metadataBase: new URL('http://localhost:3000'),
 };
 
 export default function RootLayout({
