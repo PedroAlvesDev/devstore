@@ -34,9 +34,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Approve pnpm build scripts
-        run: pnpm approve-builds --yes
-
       - name: Install dependencies
         run: pnpm install
         env:
@@ -47,7 +44,8 @@ jobs:
         env:
           APP_URL: "http://localhost:3000"
           NEXT_PUBLIC_API_BASE_URL: "https://devstore-api-iota.vercel.app"
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
         with:
-          install-command: pnpm install --unsafe-perm
+          install-command: pnpm install
           build: npm run build
           start: npm start
