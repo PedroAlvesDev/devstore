@@ -39,6 +39,11 @@ jobs:
         env:
           PNPM_ENABLE_PRE_POST_SCRIPTS: true
 
+      - name: Install Cypress binary
+        run: pnpm exec cypress install
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env:
@@ -47,5 +52,5 @@ jobs:
           PNPM_ENABLE_PRE_POST_SCRIPTS: true
         with:
           install-command: pnpm install
-          build: npm run build
-          start: npm start
+          build: pnpm run build
+          start: pnpm run start
