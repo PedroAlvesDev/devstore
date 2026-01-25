@@ -36,9 +36,11 @@ jobs:
 
       - name: Approve pnpm build scripts
         run: pnpm approve-builds --yes
-        
+
       - name: Install dependencies
         run: pnpm install
+        env:
+          PNPM_ENABLE_PRE_POST_SCRIPTS: true
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
