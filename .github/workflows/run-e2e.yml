@@ -34,8 +34,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Approve pnpm build scripts
+        run: pnpm approve-builds --yes
+        
       - name: Install dependencies
-        run: pnpm install --unsafe-perm
+        run: pnpm install
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
