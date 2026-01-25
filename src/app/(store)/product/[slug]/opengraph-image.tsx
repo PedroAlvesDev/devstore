@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 import { Product as ProductType } from "@/data/types/products";
-import data from "@/app/api/products/data.json";
+import { api } from '@/data/api';
 import { env } from '@/env';
 
 export const alt = 'About Acme'
@@ -12,13 +12,15 @@ export const size = {
 export const contentType = 'image/png'
 
 async function getProduct(slug: string): Promise<ProductType> {
-    const product = data.products.find((p) => p.slug === slug)
+  const response = await api(`/products/${slug}`)
 
-    if (!product) {
-        throw new Error('Product not found')
-    }
+  if (!response.ok) {
+    throw new Error('Product not found')
+  }
 
-    return product as ProductType
+  const product = await response.json()
+
+  return product as ProductType
 }
  
 export default async function OgImage({ params } : { params: { slug: string } }) {

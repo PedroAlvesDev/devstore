@@ -1,5 +1,5 @@
 import { Product as ProductType } from "@/data/types/products";
-import data from "@/app/api/products/data.json";
+import { api } from "@/data/api";
 import { Metadata } from "next";
 import Image from "next/image";
 import { AddToCartButton } from "@/components/add-to-cart-button";
@@ -11,11 +11,13 @@ interface ProductPageProps {
 }
 
 async function getProduct(slug: string): Promise<ProductType> {
-    const product = data.products.find((p) => p.slug === slug)
+    const response = await api(`/products/${slug}`)
 
-    if (!product) {
+    if (!response.ok) {
         throw new Error('Product not found')
     }
+
+    const product = await response.json()
 
     return product as ProductType
 }
@@ -33,7 +35,8 @@ export async function generateMetadata(
 }
 
 export async function generateStaticParams() {
-    const products: ProductType[] = data.products.filter((p) => p.featured)
+    const response = await api('/products/featured')
+    const products: ProductType[] = await response.json()
 
     return products.map((product) => ({ slug: product.slug }))
 
