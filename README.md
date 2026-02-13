@@ -59,17 +59,3 @@ O projeto usa a configuração definida em `src/env.ts`. Adicione variáveis sen
 **Contribuindo**
 - Fork do repositório, crie uma branch com a feature/bugfix e abra um pull request.
 - Sinta-se à vontade para melhorar testes E2E e cobertura de componentes.
-
-**Arquitetura (Mermaid)**
-Diagrama rápido do fluxo entre páginas e o contexto do carrinho:
-
-```mermaid
-flowchart LR
-  User[Usuário] -->|Busca| Search[Página de Busca]
-  Search -->|Clica produto| Product[Página do Produto]
-  Product -->|Adiciona ao carrinho| CartCtx[Contexto do Carrinho]
-  CartCtx --> CartWidget[Cart Widget]
-  CartWidget -->|Navega| Checkout[Checkout (futuro)]
-  API[API/Mock] -->|Fornece dados| Search
-  API --> Product
-```
