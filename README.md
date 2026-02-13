@@ -60,45 +60,16 @@ O projeto usa a configuração definida em `src/env.ts`. Adicione variáveis sen
 - Fork do repositório, crie uma branch com a feature/bugfix e abra um pull request.
 - Sinta-se à vontade para melhorar testes E2E e cobertura de componentes.
 
-**Licença**
-Nenhuma licença especificada no repositório. Adicione um arquivo `LICENSE` se quiser definir uma licença.
-
----
-
-Se quiser, posso:
-- adicionar badges (build/test),
-- incluir instruções de deployment (Vercel),
-- ou abrir um PR com este `README.md` pronto.
-
 **Arquitetura (Mermaid)**
-Diagrama do fluxo (visualização melhorada). Copie o bloco abaixo em um arquivo Markdown para renderização, ou veja a versão estática em `public/mermaid-architecture.svg`.
+Diagrama rápido do fluxo entre páginas e o contexto do carrinho:
 
 ```mermaid
-flowchart TB
-  %% Frontend
-  subgraph Frontend [Frontend]
-    direction TB
-    User[Usuário] --> Search[Página de Busca]
-    Search --> Product[Página do Produto]
-    Product --> CartCtx[Contexto do Carrinho]
-    CartCtx --> CartWidget[Cart Widget]
-    CartWidget --> Checkout[Checkout (futuro)]
-  end
-
-  %% Backend / API
-  subgraph Backend [API / Mock]
-    API[API / Mock de Produtos]
-  end
-
-  %% Integrações
-  Search -->|consulta| API
-  Product -->|dados do produto| API
-
-  classDef fg fill:#ffffff,stroke:#111827,stroke-width:1px;
-  class Frontend,Backend fg;
-
-  %% Notas visuais
-  class User,Search,Product,CartCtx,CartWidget,Checkout,API fg;
+flowchart LR
+  User[Usuário] -->|Busca| Search[Página de Busca]
+  Search -->|Clica produto| Product[Página do Produto]
+  Product -->|Adiciona ao carrinho| CartCtx[Contexto do Carrinho]
+  CartCtx --> CartWidget[Cart Widget]
+  CartWidget -->|Navega| Checkout[Checkout (futuro)]
+  API[API/Mock] -->|Fornece dados| Search
+  API --> Product
 ```
-
-Observação: plataformas como GitHub renderizam Mermaid; se preferir um arquivo estático, veja `public/mermaid-architecture.svg`.
